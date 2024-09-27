@@ -2,23 +2,24 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "test") %>
+  host: <%= ENV.fetch("POSTGRES_HOST", "db") %>
+  port: <%= ENV.fetch("POSTGRES_PORT", 5432) %>
 
 development:
   <<: *default
   database: app_development
-  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD", "test") %>
-  host: localhost
-  port: 5432
 
 test:
   <<: *default
   database: app_test
-  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD", "test") %>
-  host: localhost
-  port: 5432
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: app_production
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
+  url: <%= ENV['DATABASE_URL'] %>  # This is important for Heroku
