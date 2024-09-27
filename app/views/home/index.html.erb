@@ -1,0 +1,107 @@
+<!-- Navigation bar (as you already have) -->
+<div class="navbar">
+  <div class="nav-left">
+    <h1>ClutterChat</h1>
+  </div>
+
+  <div class="nav-right">
+    <% if user_signed_in? %>
+      <span>Welcome, <%= current_user.discord_username %>!</span>
+      <%= form_with url: destroy_user_session_path, method: :delete, class: 'logout-form' do %>
+        <%= submit_tag 'Sign out', class: "btn-logout" %>
+      <% end %>
+    <% else %>
+      <%= form_tag user_discord_omniauth_authorize_path, method: :post, authenticity_token: true, data: { turbo: false }, class: 'login-form' do %>
+        <%= submit_tag "Sign in with Discord", class: "btn-login" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Post creation form (for logged-in users) -->
+<% if user_signed_in? %>
+  <div class="new-post-form">
+    <%= form_with model: @post, url: posts_path, local: true do |form| %>
+      <div class="field">
+        <%= form.text_area :content, placeholder: "What's on your mind?", rows: 3, class: "post-input" %>
+      </div>
+      <%= form.submit "Post", class: "btn-post" %>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- Sticky notes or other content -->
+<div class="sticky-notes-container">
+  <% @posts.each do |post| %>
+    <div class="sticky-note" data-id="<%= post.id %>">
+      <h3><%= post.user.discord_username %></h3>
+      <p><%= post.content %></p>
+      <small>Posted on: <%= post.created_at.strftime("%B %d, %Y %H:%M") %></small>
+    </div>
+  <% end %>
+</div>
+
+<!-- Inline CSS to style the post form, sticky notes, and navbar -->
+<style>
+  .new-post-form {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .post-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .btn-post {
+    background-color: #7289da;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-post:hover {
+    background-color: #5a73c8;
+  }
+
+  .sticky-notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+    padding: 40px;
+    margin-top: 20px;
+  }
+
+  .sticky-note {
+    background-color: #fff176;
+    color: #333;
+    padding: 20px;
+    width: 200px;
+    min-height: 150px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: rotate(-3deg);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .sticky-note:nth-child(even) {
+    transform: rotate(2deg);
+  }
+
+  .sticky-note:hover {
+    transform: rotate(0deg);
+  }
+</style>

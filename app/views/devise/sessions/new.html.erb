@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="login-header">
+    <h2>Welcome Back!</h2>
+    <p>Log in to access your account and connect with Discord.</p>
+  </div>
+
+  <div class="login-form">
+    <%= form_tag(user_discord_omniauth_authorize_path, method: :post, authenticity_token: form_authenticity_token, data: { turbo: "false" }) do %>
+      <%= submit_tag "Sign in with Discord", class: "btn-discord-login" %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Add inline CSS for quick customization -->
+<style>
+  /* Container for the login form */
+  .login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Login header styles */
+  .login-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .login-header p {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+
+  /* Styling for the submit button */
+  .btn-discord-login {
+    background-color: #7289da;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-discord-login:hover {
+    background-color: #5a73c8;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+</style>

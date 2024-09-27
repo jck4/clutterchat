@@ -1,0 +1,10 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <%= button_to "Sign in with Discord", user_discord_omniauth_authorize_path, method: :post %>
+
+<% end %>
+
+<%= render "devise/shared/links" %>
