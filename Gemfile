@@ -30,6 +30,7 @@ gem 'omniauth-discord'
 gem 'faker'
 gem 'rails-ujs'
 gem 'redis', '~> 5.2'
+gem 'redis-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
