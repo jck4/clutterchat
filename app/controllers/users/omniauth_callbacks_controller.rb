@@ -1,5 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_before_action :verify_authenticity_token, only: :discord
 
   def discord
     # Log the received auth information for debugging
@@ -15,8 +14,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       # Log the user creation failure and the associated errors
       Rails.logger.warn "User creation failed: #{@user.errors.full_messages}"
-      session['devise.discord_data'] = request.env['omniauth.auth'].except('extra')
-      redirect_to new_user_registration_url, alert: 'Error while authenticating with Discord.'
+      
+      # Redirect to custom error page with error message
+      error_message = @user.errors.full_messages.join(", ")
+      redirect_to auth_error_path(error_message: error_message)
     end
   end
 

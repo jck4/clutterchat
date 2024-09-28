@@ -31,15 +31,15 @@
 <% end %>
 
 <% if user_signed_in? %>
-<div class="sticky-notes-container">
-  <% @posts.each do |post| %>
-    <div class="sticky-note" data-id="<%= post.id %>">
-      <h3><%= post.user.discord_username %></h3>
-      <p><%= post.content %></p>
-      <small>Posted on: <%= post.created_at.strftime("%B %d, %Y %H:%M") %></small>
-    </div>
-  <% end %>
-</div>
+  <div class="sticky-notes-container">
+    <% @posts.each do |post| %>
+      <div class="sticky-note" data-id="<%= post.id %>">
+        <h3><%= post.user.discord_username %></h3>
+        <p><%= post.content %></p>
+        <small>Posted on: <%= post.created_at.strftime("%B %d, %Y %H:%M") %></small>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
 <!-- Updated CSS -->
@@ -165,5 +165,18 @@
     font-size: 1.5rem;
     transform: rotate(-10deg);
   }
+
+  /* Small media queries for mobile responsiveness */
+  @media (max-width: 600px) {
+    .sticky-note {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .new-post-form {
+      max-width: 100%;
+      padding: 15px;
+    }
+  }
 </style>
- 
